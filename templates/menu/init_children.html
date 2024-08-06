@@ -1,0 +1,12 @@
+<ul>
+  {% for child in children %}
+    <li class="{% if child in active_item_ancestors or child == active_item %}active{% endif %}">
+      <a href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+      {% if child == active_item or child in active_item_ancestors %}
+        {% include 'menu/init_children.html' with parent=child children=child.children.all active_item=active_item active_item_ancestors=active_item_ancestors %}
+      {% elif child in active_item_children %}
+        {% include 'menu/init_children.html' with parent=child children=child.children.all active_item=active_item active_item_ancestors=active_item_ancestors %}
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
